@@ -168,9 +168,12 @@ DB_PASSWORD=
 ```
 
 ```bash
-# 4. Créer la base puis importer le jeu de données fourni (dump phpMyAdmin)
+# 4. Créer la base, les tables et les équipements de départ
 mysql -u root -p -e "CREATE DATABASE sicilylines CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-mysql -u root -p sicilylines < SicilyLines.db
+php artisan migrate --seed
+
+#    (variante : importer le jeu de données d'exemple, dump phpMyAdmin)
+#    mysql -u root -p sicilylines < SicilyLines.db
 
 # 5. Rendre les images accessibles et lancer l'application
 php artisan storage:link
@@ -182,7 +185,7 @@ L'application est ensuite disponible sur `http://127.0.0.1:8000`. Créez un comp
 
 ## Tests
 
-Les tests de fonctionnalité (authentification, profil, réinitialisation de mot de passe…) sont écrits avec **Pest** :
+Les tests de fonctionnalité sont écrits avec **Pest** et tournent sur une base SQLite en mémoire. Ils couvrent l'authentification, le profil et tout le CRUD des ferries : accès refusé aux invités, validation, création avec photo et équipements, modification, suppression en cascade et génération des PDF.
 
 ```bash
 php artisan test
@@ -193,7 +196,7 @@ php artisan test
 - Gestion des **liaisons** (ports de départ et d'arrivée) et des **traversées** avec leurs horaires
 - Réservation de billets côté passager
 - Rôles (administrateur / employé) pour limiter la suppression de ferries
-- Tests de fonctionnalité dédiés au CRUD des ferries
+- Champ « capacité » dans les formulaires (déjà présent en base)
 
 ## Auteur
 

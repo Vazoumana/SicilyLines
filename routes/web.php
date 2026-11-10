@@ -20,6 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
    
     Route::get('/ferry/{id}/pdf', [FerryController::class, 'downloadPdf'])->name('ferry.pdf');
+    Route::get('/all-ferries-pdf', [FerryController::class, 'downloadAllPdf'])->name('ferries.pdf_all');
 });
 
 
@@ -29,10 +30,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-Route::get('/all-ferries-pdf', [FerryController::class, 'downloadAllPdf'])->name('ferries.pdf_all');
-
-
-Route::resource('ferries', FerryController::class);
 
 require __DIR__.'/auth.php';
